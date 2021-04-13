@@ -1,0 +1,57 @@
+# Donk Project
+# Copyright (c) 2021 Warriorstar Orion <orion@snowfrost.garden>
+# SPDX-License-Identifier: MIT
+load(":defs.bzl", "dm2pb", "donk_library")
+load("@rules_cc//cc:defs.bzl", "cc_test")
+load("@donk//:defs.bzl", "DARWIN_DEFAULT_COPTS", "WINDOWS_DEFAULT_COPTS")
+
+TEST_NAMES = [
+    "helloworld",
+    "newobj",
+    "newvar",
+    "primitive_manips",
+    "bencht",
+    "sleep_interleaves",
+]
+
+[
+    dm2pb(
+        name = TEST_NAME + "_dm2pb",
+        srcs = glob([
+            "byond_projects/" + TEST_NAME + "/*.dm",
+        ]),
+        environment = "byond_projects/" + TEST_NAME + "/main.dme",
+    )
+    for TEST_NAME in TEST_NAMES
+]
+
+[
+    donk_library(
+        name = TEST_NAME + "_donklib",
+        input_proto = ":" + TEST_NAME + "_dm2pb",
+    )
+    for TEST_NAME in TEST_NAMES
+]
+
+[
+    cc_test(
+        name = TEST_NAME + "_test",
+        srcs = [
+            "runner.cc",
+            "runner.h",
+            ":" + TEST_NAME + "_donklib",
+        ],
+        copts = select({
+            "@donk//:windows": WINDOWS_DEFAULT_COPTS,
+            "@donk//:darwin": DARWIN_DEFAULT_COPTS,
+        }),
+        deps = [
+            ":" + TEST_NAME + "_donklib",
+            "@donk//api",
+            "@donk//core",
+            "@donk//interpreter",
+            "@spdlog",
+        ],
+    )
+    for TEST_NAME in TEST_NAMES
+]
