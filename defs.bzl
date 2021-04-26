@@ -115,7 +115,7 @@ donk_library = rule(
             allow_single_file = [".binarypb"],
         ),
         "_transpiler": attr.label(
-            default = "@donk_transpiler//bazel:transpiler",
+            default = "@donk_transpiler//:main",
             executable = True,
             cfg = "host",
         ),

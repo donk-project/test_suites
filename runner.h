@@ -23,10 +23,10 @@ namespace donk {
 namespace runner {
 
 class Runner {
- public:
+public:
   Runner() {
     auto collector = std::make_shared<std::map<
-        donk::path_t, std::vector<std::function<void(donk::iota_t&)>>>>();
+        donk::path_t, std::vector<std::function<void(donk::iota_t &)>>>>();
     dtpo::RegisterAll(collector);
     (*collector)[donk::path_t("/")].push_back(donk::api::Register);
 
@@ -50,11 +50,11 @@ class Runner {
     }
   }
 
- private:
+private:
   std::shared_ptr<donk::internal::Interpreter> interpreter_;
 };
 
-}  // namespace runner
-}  // namespace donk
+} // namespace runner
+} // namespace donk
 
-#endif  // __DONK_INTERPRETER_RUNNER_RUNNER_H__
+#endif // __DONK_INTERPRETER_RUNNER_RUNNER_H__

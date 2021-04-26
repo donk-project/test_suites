@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 #include "runner.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   donk::runner::Runner runner;
   runner.CallMain();
   return 0;

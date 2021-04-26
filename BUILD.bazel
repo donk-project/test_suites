@@ -12,6 +12,8 @@ TEST_NAMES = [
     "primitive_manips",
     "bencht",
     "sleep_interleaves",
+    "parentcalls",
+    "coretype_subclass",
 ]
 
 [
@@ -20,7 +22,7 @@ TEST_NAMES = [
         srcs = glob([
             "byond_projects/" + TEST_NAME + "/*.dm",
         ]),
-        environment = "byond_projects/" + TEST_NAME + "/main.dme",
+        environment = "byond_projects/" + TEST_NAME + "/" + TEST_NAME + ".dme",
     )
     for TEST_NAME in TEST_NAMES
 ]
